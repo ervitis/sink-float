@@ -5,21 +5,37 @@
 
 package registry
 
-import "github.com/google/wire"
+import (
+	"github.com/ervitis/sink-float/master/config"
+	"github.com/google/wire"
 
-var repositoriesSet = wire.NewSet()
+	"github.com/ervitis/sink-float/master/handlers/grpc"
+	"github.com/ervitis/sink-float/master/repository"
+	"github.com/ervitis/sink-float/master/usecases"
+)
 
-var usecasesSet = wire.NewSet()
+var repositoriesSet = wire.NewSet(
+	repository.NewMemcache,
+)
+
+var usecasesSet = wire.NewSet(
+	repositoriesSet,
+	usecases.NewSinkUseCase,
+)
 
 type GRPCHandlers struct {
+	grpc.SinkFleetHandler
 }
 
-func NewGRPCHandlers() GRPCHandlers {
-	return GRPCHandlers{}
+func NewGRPCHandlers(sinkFleetHandler grpc.SinkFleetHandler) GRPCHandlers {
+	return GRPCHandlers{
+		sinkFleetHandler,
+	}
 }
 
-func HandleGRPCHandlerProvider() GRPCHandlers {
+func HandleGRPCHandlerProvider(cfg config.AppConfig) GRPCHandlers {
 	wire.Build(
+		usecasesSet,
 		NewGRPCHandlers,
 	)
 	return GRPCHandlers{}

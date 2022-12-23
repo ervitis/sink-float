@@ -23,14 +23,4 @@ generate: generate-grpc-v1 install ## Generate everything to run the app
 dependency-injection: ## Generate the dependency injections using wire
 	go generate -tags=wireinject ./...
 
-generate-grpc-v1: ## Generate the server and client from proto file
-	rm -rf ./pkg/adapters/grpc/v1/*.pb.go && \
-	bash runtime-container.sh run \
-	--rm -v ${PWD}:/defs namely/protoc-all \
-	-f ./api_schemas/proto/v1/*.proto \
-	-l go \
-	--go_out=plugins=grpc:/gen/grpc/v1 && \
-	sleep 1 && \
-	mv ./gen/pb-go/* ./pkg/adapters/grpc/v1/ && \
-	sleep 1 && \
-	rm -rf ./gen
+
