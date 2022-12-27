@@ -13,14 +13,17 @@ execute: ## Run the application
 install: ## Install dependencies
 	go mod download && go mod tidy
 
-db-run: ## Start the database container
-	bash db-start.sh
-
 run: install execute ## Run the microservice
 
-generate: generate-grpc-v1 install ## Generate everything to run the app
+generate: generate-grpc-v1 install dependency-injection ## Generate everything to run the app
 
 dependency-injection: ## Generate the dependency injections using wire
-	go generate -tags=wireinject ./...
+	go generate -tags=wireinject,tools ./...
 
-
+generate-grpc-v1: ## Generate the proto files
+	rm -rf ./handlers/grpc/*.pb.go && \
+	path=$${PWD} && \
+	cd ../proto && \
+	make generate-grpc && \
+	sleep 2 && \
+	cd $${path}
