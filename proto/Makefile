@@ -3,7 +3,7 @@ help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[36m%-20s\033[93m %s\n", $$1, $$2}'
 
 move_to_master:
-	mv ./gen/pb-go/* ../master/handlers/grpc/
+	mv ./gen/pb-go/*.go ../master/adapters/grpc_impl/
 
 generate-grpc: ## Generate the server and client from proto file
 	bash build_grpc.sh & \

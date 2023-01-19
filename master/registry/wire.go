@@ -6,10 +6,10 @@
 package registry
 
 import (
+	"github.com/ervitis/sink-float/master/adapters/handlers/grpc"
 	"github.com/google/wire"
 
 	"github.com/ervitis/sink-float/master/config"
-	"github.com/ervitis/sink-float/master/handlers/grpc"
 	"github.com/ervitis/sink-float/master/repository"
 	"github.com/ervitis/sink-float/master/usecases"
 )
@@ -20,7 +20,7 @@ var repositoriesSet = wire.NewSet(
 
 var usecasesSet = wire.NewSet(
 	repositoriesSet,
-	usecases.NewSinkUseCase,
+	usecases.NewMasterSinkUseCase,
 )
 
 type GRPCHandlers struct {

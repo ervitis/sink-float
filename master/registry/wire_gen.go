@@ -7,8 +7,8 @@
 package registry
 
 import (
+	"github.com/ervitis/sink-float/master/adapter/handlers/grpc"
 	"github.com/ervitis/sink-float/master/config"
-	"github.com/ervitis/sink-float/master/handlers/grpc"
 	"github.com/ervitis/sink-float/master/repository"
 	"github.com/ervitis/sink-float/master/usecases"
 	"github.com/google/wire"
