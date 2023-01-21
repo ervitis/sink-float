@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "./;grpc";
+
+import "google/protobuf/empty.proto";
+
+service MasterSinkFleetService {
+  rpc Attack(AtomicMissile)
+      returns (MissileResponse) {}
+  rpc CheckIsAlive(google.protobuf.Empty)
+      returns (Alive) {}
+}
+
+service ShipClientService {
+  rpc SendClientKill(KillRequest)
+      returns (google.protobuf.Empty) {}
+}
+
+message Alive {
+  bool isAlive = 1;
+}
+
+message MissileRequest {
+  uint64 x = 1;
+  uint64 y = 2;
+}
+
+message AtomicMissile {
+  uint32 guessNumber = 1;
+}
+
+message MissileResponse {
+  bool hit = 1;
+}
+
+message KillRequest {
+  uint64 missile = 1;
+}
